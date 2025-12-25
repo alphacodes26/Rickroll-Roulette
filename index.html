@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rickroll Roulette</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle, #222, #000);
+      color: #eee;
+      font-family: "Segoe UI", Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: crimson;
+      color: white;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px crimson;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 1rem;
+      height: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🎰 Rickroll Roulette</h1>
+  <p>1 in 6 chance.<br>Pull the trigger.<br>Let luck choose your destiny.</p>
+
+  <button onclick="pullTrigger()">PULL</button>
+
+  <div id="status"></div>
+</div>
+
+<script>
+  const chambers = [
+    "https://www.youtube.com/watch?v=5Od0aOse1wc", // safe
+    "https://www.youtube.com/watch?v=3bLfzgZ-wO8", // safe
+    "https://youtube.com/watch?v=k85mRPqvMbE", // safe
+    "https://www.youtube.com/watch?v=9bZkp7q19f0", // safe
+    "https://www.youtube.com/watch?v=FzG4uDgje3M", // safe
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"  // 💀 RICKROLL
+  ];
+
+  let spinning = false;
+
+  function pullTrigger() {
+    if (spinning) return;
+    spinning = true;
+
+    const status = document.getElementById("status");
+    const messages = [
+      "Spinning the chamber...",
+      "Still safe...",
+      "Heartbeat intensifies...",
+      "...",
+      "It's now or never."
+    ];
+
+    let flashes = 0;
+    let msgIndex = 0;
+
+    const spinEffect = setInterval(() => {
+      document.body.style.background =
+        document.body.style.background === "black"
+          ? "radial-gradient(circle, #222, #000)"
+          : "black";
+
+      status.textContent = messages[msgIndex % messages.length];
+      msgIndex++;
+      flashes++;
+
+      if (flashes >= 12) {
+        clearInterval(spinEffect);
+
+        const choice = Math.floor(Math.random() * chambers.length);
+        window.location.href = chambers[choice];
+      }
+    }, 150);
+  }
+</script>
+
+</body>
+</html>
